@@ -89,7 +89,7 @@ void myDisplay() {
   //----------------------- ----------------------- -----------------------
   // This is a quick hack to add a little bit of animation.
   static float ecc = 1.0f;
-  const float ecc_stp = 0.0005f;
+  const float ecc_stp = 0.0001f; // caliberate with how fast your computer is
   const float foci = 0.3f;
   const float basey = 0.0f;
 
@@ -97,7 +97,7 @@ void myDisplay() {
   const float b = sqrt(pow(a, 2) - pow(foci, 2));
 
   static float deg = 0.0f;
-  const float deg_stp = 0.01f;
+  const float deg_stp = 20 * ecc_stp;
 
   deg += deg_stp;
 
@@ -126,7 +126,7 @@ void myDisplay() {
   // glVertex3f( 0.0f, 0.0f, 0.0f);               // bottom right corner of rectangle
   // glEnd();
   // Triangle Code
-  glColor3f(1.0f,0.5f,0.0f);                   // setting the color to orange for the triangle
+  glColor3f(ecc,0.5f,0.0f);                   // setting the color to orange for the triangle
 
   //float basey = 0.0f;                 // height of triangle = sqrt(.8^2-.4^2)
   glBegin(GL_POLYGON);
