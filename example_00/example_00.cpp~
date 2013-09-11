@@ -88,13 +88,23 @@ void myDisplay() {
 
   //----------------------- ----------------------- -----------------------
   // This is a quick hack to add a little bit of animation.
-  static float tip = 0.0f;
-  const  float stp = 0.0002f;
-  const  float beg = 0.1f;
-  const  float end = 0.9f;
+  static float ecc = 1.0f;
+  const float ecc_stp = 0.0001f; // caliberate with how fast your computer is
+  const float foci = 0.3f;
+  const float basey = 0.0f;
 
-  tip += stp;
-  if (tip>end) tip = beg;
+  const float a = foci / ecc;
+  const float b = sqrt(pow(a, 2) - pow(foci, 2));
+
+  static float deg = 0.0f;
+  const float deg_stp = 0.0025f; // caliberate with how fast your computer is (make related to ecc_stp?)
+
+  deg += deg_stp;
+
+  ecc -= ecc_stp;
+  if (ecc < 0) {
+    ecc = 1.0f;
+  }
   //----------------------- ----------------------- -----------------------
 
 
@@ -116,13 +126,13 @@ void myDisplay() {
   // glVertex3f( 0.0f, 0.0f, 0.0f);               // bottom right corner of rectangle
   // glEnd();
   // Triangle Code
-  glColor3f(1.0f,0.5f,0.0f);                   // setting the color to orange for the triangle
+  glColor3f(ecc,0.5f,0.0f);                   // setting the color to orange for the triangle
 
-  float basey = 0.0f;                  // height of triangle = sqrt(.8^2-.4^2)
+  //float basey = 0.0f;                 // height of triangle = sqrt(.8^2-.4^2)
   glBegin(GL_POLYGON);
-  glVertex3f(tip,  0.4f, 0.0f);                // top tip of triangle
-  glVertex3f(-0.3f, basey, 0.0f);               // lower left corner of triangle
-  glVertex3f(0.3f, basey, 0.0f);               // lower right corner of triangle
+  glVertex3f(a * cos(deg), b * sin(deg), 0.0f);                // top tip of triangle
+  glVertex3f(-foci, basey, 0.0f);               // lower left corner of triangle
+  glVertex3f(foci, basey, 0.0f);               // lower right corner of triangle
   glEnd();
   //-----------------------------------------------------------------------
 
